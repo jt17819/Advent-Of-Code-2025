@@ -9,14 +9,20 @@ def main():
 
     total = 0
     for line in data:
-        joltage = [0] * 12
-        for i in reversed(range(len(line))):
-            val = line[i]
-            for j in joltage:
-                if joltage[j] < val:
-                    val, joltage[j] = joltage[j], val
-                joltage = max(joltage, int(line[i] + line[j]))
-        total += joltage
+        p = 0
+        l = len(line)
+        num_digits = 12
+        curr = 0
+        joltage = ""
+        while curr < num_digits:
+            vals = line[p : l - num_digits + 1 + curr]
+            m = 0
+            for i in range(len(vals)):
+                m = i if vals[m] < vals[i] else m
+            joltage += vals[m]
+            p += m + 1
+            curr += 1
+        total += int(joltage)
 
     return total
 
